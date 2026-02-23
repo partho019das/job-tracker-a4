@@ -1,49 +1,65 @@
-let interviewlist=[];
-let rejectedlist=[];
+
+// ELEMENT SELECT
+
+const totalCounter = document.getElementById("total-counter");
+const interviewCounter = document.getElementById("Interview-counter");
+const rejectedCounter = document.getElementById("Rejected-counter");
+
+const allSection = document.getElementById("allcard");
+
+const btnAll = document.getElementById("b-all");
+const btnInterview = document.getElementById("b-interview");
+const btnRejected = document.getElementById("b-rejected");
+
+const jobCountText = document.querySelector("main > div.flex > p:last-child");
 
 
-let all = document.getElementById("total-counter");
-let interview = document.getElementById("Interview-counter");
-let rejected = document.getElementById("Rejected-counter");
+// CREATE NEW SECTIONS
 
-const AllCardSection = document.getElementById("allcard");
+const interviewSection = document.createElement("div");
+const rejectedSection = document.createElement("div");
 
-const mainContainer=document.querySelector(`main`);
+interviewSection.className = "grid gap-5";
+rejectedSection.className = "grid gap-5";
+
+interviewSection.style.display = "none";
+rejectedSection.style.display = "none";
+
+allSection.after(interviewSection);
+interviewSection.after(rejectedSection);
 
 
-function CalculateCount() {
-    all.innerText = AllCardSection.children.length;
-   interview.innerText = interviewlist.length
-   rejected.innerText = rejectedlist.length
+// UPDATE COUNTER
+
+function updateCounts() {
+  totalCounter.innerText = allSection.children.length;
+  interviewCounter.innerText = interviewSection.children.length;
+  rejectedCounter.innerText = rejectedSection.children.length;
+
+  const totalJobs = allSection.children.length + interviewSection.children.length + rejectedSection.children.length;
+  jobCountText.innerText = totalJobs + " jobs";
 }
 
-CalculateCount();
 
-                                // button color change and click function
+// MOVE CARD
 
-const allB=document.getElementById("b-all");
-const interviewB=document.getElementById("b-interview");
-const rejectedB=document.getElementById("b-rejected");
-
-allB.addEventListener("click", handleClick);
-interviewB.addEventListener("click", handleClick);
-rejectedB.addEventListener("click", handleClick);
-
-function handleClick(e) {
-    toggleStyle(e.target);
+function moveCard(card, targetSection) {
+  targetSection.appendChild(card);
+  updateCounts();
 }
 
-function toggleStyle(selected) {
-   allB.classList.remove(`bg-[#3B82F6]`,`text-white`)
-   interviewB.classList.remove(`text-[#64748B]`,`bg-[#F1F2F4]`)
-   rejectedB.classList.remove(`text-[#64748B]`,`bg-[#F1F2F4]`)
 
-       allB.classList.add("text-[#64748B]", "bg-[#F1F2F4]");
-    interviewB.classList.add("text-[#64748B]", "bg-[#F1F2F4]");
-    rejectedB.classList.add("text-[#64748B]", "bg-[#F1F2F4]");
+// DELETE CARD
 
-
-   selected.classList.remove("text-[#64748B]", "bg-[#F1F2F4]");
-selected.classList.add("bg-[#3B82F6]");
-
+function addDeleteFunctionality(card) {
+  const deleteBtn = card.querySelector(".fa-trash-can");
+  if (deleteBtn) {
+    deleteBtn.parentElement.addEventListener("click", () => {
+      card.remove();
+      updateCounts();
+    });
+  }
 }
+
+
+
