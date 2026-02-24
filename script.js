@@ -24,35 +24,77 @@ rejectedSection.style.display = "none";
 allSection.after(interviewSection);
 interviewSection.after(rejectedSection);
 
+
+// EMPTY MESSAGE SYSTEM
+
+
+function createEmptyMessage() {
+    const msg = document.createElement("div");
+    msg.innerHTML = `
+        <div class="text-center py-10 text-gray-500 col-span-full">
+            <p class="text-lg font-medium">No Data Found</p>
+        </div>
+    `;
+    msg.style.display = "none";
+    return msg;
+}
+
+const emptyAll = createEmptyMessage();
+const emptyInterview = createEmptyMessage();
+const emptyRejected = createEmptyMessage();
+
+allSection.appendChild(emptyAll);
+interviewSection.appendChild(emptyInterview);
+rejectedSection.appendChild(emptyRejected);
+
+
 // UPDATE COUNTER
+
+
 function updateCounts() {
-    // total jobs is all + interview + rejected
-    const totalJobs = allSection.children.length + interviewSection.children.length + rejectedSection.children.length;
 
-    // Remaining jobs = not applied only
-    const remainingJobs = allSection.children.length;
+    const allCards = allSection.querySelectorAll(":scope > div:not(:last-child)");
+    const interviewCards = interviewSection.querySelectorAll(":scope > div:not(:last-child)");
+    const rejectedCards = rejectedSection.querySelectorAll(":scope > div:not(:last-child)");
 
-    totalCounter.innerText = remainingJobs; // Right side counter
-    interviewCounter.innerText = interviewSection.children.length;
-    rejectedCounter.innerText = rejectedSection.children.length;
+    const allCount = allCards.length;
+    const interviewCount = interviewCards.length;
+    const rejectedCount = rejectedCards.length;
 
-    jobCountText.innerText = remainingJobs + " jobs";
+    totalCounter.innerText = allCount;
+    interviewCounter.innerText = interviewCount;
+    rejectedCounter.innerText = rejectedCount;
+
+    jobCountText.innerText = allCount + " jobs";
+
+    // SHOW / HIDE EMPTY MESSAGE
+    emptyAll.style.display = allCount === 0 ? "block" : "none";
+    emptyInterview.style.display = interviewCount === 0 ? "block" : "none";
+    emptyRejected.style.display = rejectedCount === 0 ? "block" : "none";
 }
 
 // MOVE CARD
-function moveCard(card, targetSection, statusText) {
-    targetSection.appendChild(card);
 
-    // Update Not Applied button text
+
+function moveCard(card, targetSection, statusText) {
+
+    targetSection.insertBefore(
+        card,
+        targetSection.lastElementChild
+    );
+
     const notAppliedBtn = card.querySelector("button:nth-of-type(1)");
     if (notAppliedBtn) {
         notAppliedBtn.innerText = statusText;
     }
 
-    updateCounts(); // Always update after move
+    updateCounts();
 }
 
+
 // DELETE CARD
+
+
 function addDeleteFunctionality(card) {
     const deleteBtn = card.querySelector(".fa-trash-can");
     if (deleteBtn) {
@@ -63,16 +105,23 @@ function addDeleteFunctionality(card) {
     }
 }
 
+
 // HANDLE CARD BUTTONS
+
+
 function addCardButtonFunctionality(card) {
+
     const buttons = card.querySelectorAll("div.flex.flex-wrap > button");
+
     buttons.forEach((btn) => {
         const text = btn.innerText.toLowerCase();
+
         if (text === "interview") {
             btn.addEventListener("click", () => {
                 moveCard(card, interviewSection, "Interview");
             });
         }
+
         if (text === "rejected") {
             btn.addEventListener("click", () => {
                 moveCard(card, rejectedSection, "Rejected");
@@ -80,14 +129,14 @@ function addCardButtonFunctionality(card) {
         }
     });
 
-    // DELETE FUNCTIONALITY
+    // DELETE
     addDeleteFunctionality(card);
 
-    // NOT APPLIED BUTTON FUNCTIONALITY
+    // NOT APPLIED BUTTON
     const notAppliedBtn = card.querySelector("button:nth-of-type(1)");
     if (notAppliedBtn) {
         notAppliedBtn.addEventListener("click", () => {
-            moveCard(card, allSection, "Not Applied"); // Back to main
+            moveCard(card, allSection, "Not Applied");
         });
     }
 }
@@ -97,7 +146,10 @@ document.querySelectorAll("#allcard > div").forEach((card) => {
     addCardButtonFunctionality(card);
 });
 
+
 // FILTER BUTTON SYSTEM
+
+
 function resetBtn() {
     btnAll.className = "text-white bg-[#3B82F6] px-6 py-2 rounded";
     btnInterview.className = "text-[#64748B] bg-[#F1F2F4] px-6 py-2 rounded";
