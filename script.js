@@ -62,4 +62,59 @@ function addDeleteFunctionality(card) {
 }
 
 
+// HANDLE CARD BUTTONS
 
+function addCardButtonFunctionality(card) {
+  const buttons = card.querySelectorAll("div.flex.flex-wrap > button");
+  buttons.forEach(btn => {
+    const text = btn.innerText.toLowerCase();
+    if (text === "interview") {
+      btn.addEventListener("click", () => moveCard(card, interviewSection));
+    }
+    if (text === "rejected") {
+      btn.addEventListener("click", () => moveCard(card, rejectedSection));
+    }
+  });
+  addDeleteFunctionality(card);
+}
+
+// Apply to existing cards
+document.querySelectorAll("#allcard > div").forEach(card => {
+  addCardButtonFunctionality(card);
+});
+
+
+// FILTER BUTTON SYSTEM
+
+function resetBtn() {
+  btnAll.className = "text-white bg-[#3B82F6] px-6 py-2 rounded";
+  btnInterview.className = "text-[#64748B] bg-[#F1F2F4] px-6 py-2 rounded";
+  btnRejected.className = "text-[#64748B] bg-[#F1F2F4] px-6 py-2 rounded";
+}
+
+btnAll.addEventListener("click", () => {
+  resetBtn();
+  btnAll.className = "text-white bg-[#3B82F6] px-6 py-2 rounded";
+  allSection.style.display = "grid";
+  interviewSection.style.display = "none";
+  rejectedSection.style.display = "none";
+});
+
+btnInterview.addEventListener("click", () => {
+  resetBtn();
+  btnInterview.className = "text-white bg-[#10B981] px-6 py-2 rounded";
+  allSection.style.display = "none";
+  interviewSection.style.display = "grid";
+  rejectedSection.style.display = "none";
+});
+
+btnRejected.addEventListener("click", () => {
+  resetBtn();
+  btnRejected.className = "text-white bg-[#EF4444] px-6 py-2 rounded";
+  allSection.style.display = "none";
+  interviewSection.style.display = "none";
+  rejectedSection.style.display = "grid";
+});
+
+// Initial count
+updateCounts();
