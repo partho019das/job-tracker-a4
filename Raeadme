@@ -1,24 +1,48 @@
-1. What is the difference between getElementById, getElementsByClassName, and querySelector / querySelectorAll?
+# Job Tracker A4
 
-getElementById is used to select a specific element by its id and perform all necessary operations on it. Since an id is always unique, it returns only a single element.
+<p align="center">
+  <img src="https://i.ibb.co/your-screenshot.png" alt="Job Tracker A4 Screenshot" width="80%" />
+</p>
 
-getElementsByClassName is used to select all elements that have a specific class name and perform operations on them. Because the same class can be used on multiple elements, it returns multiple elements as a collection.
+## 🔹 Overview
+**Job Tracker A4** is a job portal web application built using **HTML**, **Tailwind CSS**, and **Vanilla JavaScript**. Users can browse available job listings and apply directly through the platform. The app features a responsive design and dynamic UI updates for smooth interaction.
 
-querySelectorAll is used to select multiple elements using a CSS selector. It returns a NodeList.
+---
 
-If document.querySelectorAll("body") is written, then the entire body element is selected.
+## 🔹 🛠️ Technologies Used
+This project is built with the following main technologies:
 
-2. How do you create and insert a new element into the DOM?
+- **HTML5** — Structure of the web pages  
+- **Tailwind CSS** — Utility-first CSS framework for styling  
+- **JavaScript (Vanilla)** — Dynamic interactions, event handling  
 
-First, we need to create an element using createElement(). Then, we insert it inside an existing element in the DOM.
+---
 
-3. What is Event Bubbling? And how does it work?
-Event Bubbling is when an event occurs on an element, it first happens on that element and then gradually bubbles up to its parent elements.
+## 🔹 ⭐ Main Features
+- 🔹 Browse available job listings with clean UI  
+- 🔹 Dynamic rendering of job cards  
+- 🔹 Click on a job to view details/apply  
+- 🔹 Responsive layout for desktop & mobile  
+- 🔹 Interactive UI with JavaScript DOM manipulation  
 
-4.What is Event Delegation in JavaScript? Why is it useful?
+---
 
-Event Delegation is attaching a single event listener to a parent element and using the event object to identify which child element triggered the event.
-5.What is the difference between preventDefault() and stopPropagation() methods?
-`preventDefault()`  stops the browser’s default action
-`stopPropagation()`  stops event bubbling/capturing
+## 🔹 📦 Dependencies
+This project does **not** require any external JavaScript libraries or frameworks. It uses:
+
+- Vanilla JavaScript (no React/Angular/Vue)  
+- Tailwind CSS for styling *(via local file or CDN)*  
+
+---
+
+## 🔹 🧑‍💻 Run Project on Local Machine
+Follow these steps to run this project locally:
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/partho019das/job-tracker-a4.git
+
+cd job-tracker-a4
+# If you have VS Code Live Server
+Live Server ▶️ open index.html
 
